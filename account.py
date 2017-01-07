@@ -35,8 +35,8 @@ class Account():
 
         return account
 
-# Compares two lists items and returns the that exist on the transactions list
-# and dont exist already on our DB.
+# Compares two lists and returns the items that exist on the transaction (the new parsed list)
+# and dont exist already on the DB.
 def new_transactions(transactions_db, transactions):
     temp = []
     if len(transactions_db) == len(transactions):
