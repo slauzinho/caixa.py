@@ -2,12 +2,12 @@ import os
 import pickle
 
 class Account():
-
+    self.new_mov = []
+    
     def __init__(self, transactions, saldo):
         self.saldo = saldo
         self.transactions = transactions
-        self.new_mov = []
-
+        
     # Updates the class with the new transactions and the new account balance
     def update(self, new_account):
         self.saldo = new_account.saldo
