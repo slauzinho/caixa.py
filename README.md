@@ -5,7 +5,7 @@ The script will log into caixadirecta mobile webpage and it will check the 10th 
 recent transactions, it will then send you a notification using PushBullet API telling
 you the new ones.
 
-Basic Configuration:
+### Basic Configuration:
 You should edit the config.py file with your caixadirecta credentials.
 If you dont want the send PushBullet notifications you can edit the dict
 to "ENABLED": False.
