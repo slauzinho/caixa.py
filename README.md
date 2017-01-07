@@ -1,9 +1,9 @@
-# caixa.py
+# Welcome to caixa.py
 
-This is a very simple scraper made using selenium with Phantomjs as headless browser.
-The script will log into caixadirecta mobile webpage and it will check the 10th most
-recent transactions, it will then send you a notification using PushBullet API telling
-you the new ones.
+This is a very simple script that gives you the last transactions for your CaixaDirecta Account.
+- Gives you your current account balance.
+- Gives you a list of your last transactions
+- Sends an alert using PushBullet with the new transactions.
 
 ### Basic Configuration:
 You should edit the config.py file with your caixadirecta credentials.
