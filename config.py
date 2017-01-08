@@ -8,3 +8,11 @@ ACCOUNT_NR = "XXXXXXXX" # Format "PT 00350XXXXXXXXXXXXXXXXEUR0"
 # Here we will config the pushbullet application
 PUSHBULLET = {"ENABLED": True,
               "API": "XXXXXXXXXXXXXXXXXXXX"}
+
+# Nexmo account configuration
+NEXMO = {"ENABLED": True,
+         "PARAMS":
+         {"api_key": "XXXXXX",
+          "api_secret": "XXXXXX",
+          "to": "XXXXXX",
+          "from": "NEXMO"}}
