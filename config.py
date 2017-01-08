@@ -16,3 +16,4 @@ NEXMO = {"ENABLED": True,
           "api_secret": "XXXXXX",
           "to": "XXXXXX",
           "from": "NEXMO"}}
+
