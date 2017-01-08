@@ -11,4 +11,9 @@ Before using
 1. install [phantomjs](http://phantomjs.org/download.html)
 2. configure the config.py file with your account details
 
+To do list
+----------
+- [x] Add sms alert
+- [ ] Scan more then 1 account
+- [ ] Generate an Excel table with all the transactions
 
