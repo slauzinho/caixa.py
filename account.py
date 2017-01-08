@@ -1,7 +1,7 @@
 import os
 import pickle
 
-class Account():
+class Account(Object):
     self.new_mov = []
     
     def __init__(self, transactions, saldo):
