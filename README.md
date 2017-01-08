@@ -1,3 +1,4 @@
+![caixa.py](http://i.imgur.com/g59vV3A.png)
 # Welcome to caixa.py
 
 This is a very simple script that gives you the last transactions for your CaixaDirecta Account.
