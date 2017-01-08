@@ -39,9 +39,7 @@ class Account(Object):
 # and dont exist already on the DB.
 def new_transactions(transactions_db, transactions):
     temp = []
-    if len(transactions_db) == len(transactions):
-        return temp
-
+    
     if len(transactions_db) < len(transactions):
         temp = transactions[len(transactions_db):]
 
