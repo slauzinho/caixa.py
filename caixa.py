@@ -5,7 +5,7 @@ from config import ACCOUNT_NR, PASSWORD, USERNAME, PUSHBULLET
 from pushbullet import Pushbullet
 from account import Account
 
-driver = webdriver.PhantomJS()
+driver = webdriver.PhantomJS('/usr/local/bin/phantomjs')
 driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/login.seam")
 
 pb = Pushbullet(PUSHBULLET['API'])
