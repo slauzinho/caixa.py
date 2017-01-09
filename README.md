@@ -11,6 +11,13 @@ Before using
 1. install [phantomjs](http://phantomjs.org/download.html)
 2. configure the config.py file with the alerts details ([Pushbullet](https://www.pushbullet.com) API or [Nexmo SMS](https://www.nexmo.com) API)
 
+Basic usage
+------------
+Simply put your account details as arguments when calling the script:
+```bash
+python caixa.py -u [username] -p [password]
+```
+
 To do list
 ----------
 - [x] Add sms alert
