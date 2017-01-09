@@ -6,6 +6,8 @@ from account import Account
 from alerts import alert_balance
 from alerts import alert_me
 from argparse import ArgumentParser
+from selenium.common.exceptions import NoSuchElementException
+from os import sys
 
 driver = webdriver.PhantomJS('/usr/local/bin/phantomjs')
 driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/login.seam")
@@ -29,8 +31,19 @@ def selenium_op(username, password):
 
     ## Select account
     driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/private/contasordem/asminhascontas/movimentos/movimentos.seam")
-    select = Select(driver.find_element_by_id('consultaMovimentosForm:selConta'))
-    select.select_by_value(ACCOUNT_NR)
+    try:
+        select = Select(driver.find_element_by_id('consultaMovimentosForm:selConta'))
+
+    except  NoSuchElementException:
+        print ('Wrong username/password')
+        sys.exit(0)
+
+    try:
+        select.select_by_value(ACCOUNT_NR)
+
+    except NoSuchElementException:
+        print ('Wrong account number, please check the config.py file')
+        sys.exit(0)
 
     ## Select account balance
     saldo_aux = driver.find_element(By.XPATH, '//*[@id="consultaMovimentosForm"]/div[2]/div[2]/label').text
@@ -38,7 +51,11 @@ def selenium_op(username, password):
 
     ## Select table of moviments
     table = driver.find_element(By.XPATH, '//*[@id="consultaMovimentosForm"]/div[3]/table/tbody')
-    rows = table.find_elements(By.TAG_NAME, 'tr') # Select all rows from the table
+    try:
+        rows = table.find_elements(By.TAG_NAME, 'tr') # Select all rows from the table
+
+    except NoSuchElementException: # If it cant select a row it means there arent any moviments
+        return Account([],0)
 
     transaction = []
 
@@ -52,6 +69,8 @@ def selenium_op(username, password):
         montante = float(row.find_elements(By.TAG_NAME, 'td')[1].text.replace(" ", "").replace(",", "."))
 
         transaction.append((tipo, data, montante))
+
+
 
     driver.quit()
 
