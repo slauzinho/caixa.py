@@ -1,18 +1,30 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
-from config import ACCOUNT_NR, PASSWORD, USERNAME, PUSHBULLET
+from config import ACCOUNT_NR, PUSHBULLET
 from account import Account
 from alerts import alert_balance
 from alerts import alert_me
+from argparse import ArgumentParser
 
 driver = webdriver.PhantomJS('/usr/local/bin/phantomjs')
 driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/login.seam")
 
-def selenium_op():
+
+# Function responsable for getting the login details from the arguments of the
+# script. We need both the username and password otherwise the script wont run.
+def read_user_pw():
+    parser = ArgumentParser()
+    parser.add_argument('-u', '--username', help="Nome de utilizador da caixadirecta", required=True)
+    parser.add_argument('-p', '--password', help="Password para o nome de utilizador", required=True)
+    args = vars(parser.parse_args())
+
+    return args
+
+def selenium_op(username, password):
     ## Login commands
-    driver.find_element_by_id('loginForm:username').send_keys(USERNAME)
-    driver.find_element_by_id('loginForm:password').send_keys(PASSWORD)
+    driver.find_element_by_id('loginForm:username').send_keys(username)
+    driver.find_element_by_id('loginForm:password').send_keys(password)
     driver.find_element_by_id('loginForm:submit').click()
 
     ## Select account
@@ -46,8 +58,9 @@ def selenium_op():
     return Account(transaction, saldo)
 
 def main():
+    args = read_user_pw()
     a = Account([],0).load()
-    b = selenium_op()
+    b = selenium_op(args['username'], args['password'])
     alert_balance(a.saldo, b.saldo)
     a.update(b)
     a.save()
