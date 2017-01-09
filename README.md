@@ -9,7 +9,7 @@ This is a very simple script that gives you the latest transactions for your Cai
 Before using
 ------------
 1. install [phantomjs](http://phantomjs.org/download.html)
-2. configure the config.py file with your account details
+2. configure the config.py file with the alerts details (Pushbullet API or Nexmo API)
 
 To do list
 ----------
