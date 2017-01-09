@@ -20,7 +20,6 @@ class Account(Object):
 
         with open(trans_file, 'wb') as f:
             pickle.dump(self, f, protocol=pickle.HIGHEST_PROTOCOL)
-            f.close()
 
     # Loads the object from the file "caixadirecta.dat" and returns it
     @staticmethod
@@ -31,7 +30,6 @@ class Account(Object):
         if os.path.exists(trans_file):
             with open(trans_file, 'rb') as f:
                 account = pickle.load(f)
-                f.close()
 
         return account
 
