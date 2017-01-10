@@ -1,9 +1,11 @@
+from __future__ import print_function
 from pushbullet import Pushbullet
 import urllib
 import urllib2
 from config import PUSHBULLET, NEXMO
 from pushbullet.errors import InvalidKeyError
 from json import loads
+
 
 def send_pb(text):
     try:
@@ -25,8 +27,9 @@ def send_sms(text):
     request = urllib2.Request(url)
     request.add_header('Accept', 'application/json')
     response = urllib2.urlopen(request)
+
     # Error handeling for NEXMO API
-    if response.code == 200 :
+    if response.code == 200:
         data = response.read()
         #Decode JSON response from UTF-8
         decoded_response = loads(data.decode('utf-8'))
@@ -39,10 +42,8 @@ def send_sms(text):
             else:
                 print ('SMS alert sent!')
 
-    else :
-        #Check the errors
-        print ('Unexpected http {code} response from nexmo API, check your'
-               'config.py file'. response.code)
+    else:
+        print ('Unexpected http {code} response from nexmo API, check your config.py file'. response.code) #Check the errors
 
 # Sends an alert to all enabled devices on the config file with the old balance
 # and the new one.
@@ -83,6 +84,6 @@ def alert_me(transactions):
             amount = row[2]
             total += amount
         send_sms("Tens " + str(len(transactions)) + " novos movimentos\n" + "Total: " \
-                 + str(amount) + "EUR\n")
+                 + str(total) + "EUR\n")
     else:
         print ("Transaction alert is disabled")

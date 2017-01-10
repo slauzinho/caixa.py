@@ -1,7 +1,8 @@
+from __future__ import print_function
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
-from config import ACCOUNT_NR, PUSHBULLET
+from config import ACCOUNT_NR
 from account import Account
 from alerts import alert_balance
 from alerts import alert_me
@@ -55,7 +56,7 @@ def selenium_op(username, password):
         rows = table.find_elements(By.TAG_NAME, 'tr') # Select all rows from the table
 
     except NoSuchElementException: # If it cant select a row it means there arent any moviments
-        return Account([],0)
+        return Account()
 
     transaction = []
 
@@ -74,17 +75,16 @@ def selenium_op(username, password):
 
     driver.quit()
 
-    return Account(transaction, saldo)
+    return Account(transactions=transaction, saldo=saldo)
 
 def main():
     args = read_user_pw()
-    a = Account([],0).load()
-    b = selenium_op(args['username'], args['password'])
-    alert_balance(a.saldo, b.saldo)
-    a.update(b)
-    a.save()
-    alert_me(a.new_mov)
-
+    old_account = Account.load() # Load the previous transactions and balance
+    new_account = selenium_op(args['username'], args['password']) # gets the new
+    alert_balance(old_account.saldo, new_account.saldo) # lets alert the user
+    old_account.update(new_account)
+    old_account.save()
+    alert_me(old_account.new_mov) # sends alert with the new transactions
 
 if __name__ == '__main__':
     main()
