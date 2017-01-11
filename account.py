@@ -24,18 +24,21 @@ class Account(object):
                 (self.saldo, self.transactions, self.new_mov)
 
     @classmethod
-    def load(cls):
+    def load(cls, username):
         """
         Load the previously saved Account.
 
         We use this function to get the previously saved data if it can't find
         the file or if the file is empty it means there is nothing to load.
 
+        Args:
+            username (string): the name of the file should be the username.
+
         Returns:
             An Account containing previously saved data or an empty one.
 
         """
-        trans_file = os.path.expanduser('caixadirecta.dat')
+        trans_file = os.path.expanduser('{}.dat'.format(username))
 
         if os.path.exists(trans_file):
             with open(trans_file, 'rb') as f:
@@ -66,18 +69,40 @@ class Account(object):
         self.new_mov = new_transactions(self.transactions, new_account.transactions)
         self.transactions += self.new_mov
 
-    def save(self):
+    def save(self, username):
         """
         Save the Account in a file.
 
         This function is used to save all the Account data into a file named
         "caixadirecta.dat".
 
+        Args:
+            username (string): the name of the file should be the username.
+
         """
-        trans_file = os.path.expanduser('caixadirecta.dat')
+        trans_file = os.path.expanduser('{}.dat'.format(username))
 
         with open(trans_file, 'wb') as f:
             pickle.dump(self, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def create_dict(self):
+        """
+        Create a dict with sum of transactions and days.
+
+        Returns:
+            A dictionary with the days as keys and the sum of the transactions
+            of that day as the value.
+
+        """
+        trans_per_day = {}
+
+        for transaction in self.transactions:
+            if trans_per_day.has_key(transaction[1]):
+                trans_per_day[transaction[1]] += transaction[2]
+            else:
+                trans_per_day[transaction[1]] = transaction[2]
+
+        return trans_per_day
 
 def new_transactions(transactions_db, transactions):
     """
@@ -99,4 +124,5 @@ def new_transactions(transactions_db, transactions):
     for i in range(a_len):
         if transactions_db[i:] == b[:a_len-i]:
             return b[a_len-i:]
+
     return b

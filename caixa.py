@@ -9,6 +9,7 @@ from config import ACCOUNT_NR
 from account import Account
 from alerts import alert_balance
 from alerts import alert_me
+from excel import create_excel
 
 
 def read_user_pw():
@@ -20,8 +21,17 @@ def read_user_pw():
 
     """
     parser = ArgumentParser()
-    parser.add_argument('-u', '--username', help="Nome de utilizador da caixadirecta", required=True)
-    parser.add_argument('-p', '--password', help="Password para o nome de utilizador", required=True)
+    parser.add_argument('-u', '--username',
+                        help='Nome de utilizador da caixadirecta',
+                        required=True)
+    parser.add_argument('-p', '--password',
+                        help='Password para o nome de utilizador.')
+    parser.add_argument('--excel',
+                        help='Cria ficheiro em excel com movimentos.',
+                        action='store_true')
+    parser.add_argument('-f', '--file',
+                        help='The name of the file you want to create.')
+
     args = vars(parser.parse_args())
 
     return args
@@ -96,12 +106,27 @@ def caixa_scraper(username, password):
 
 def main():
     args = read_user_pw()
-    old_account = Account.load()
-    new_account = caixa_scraper(args['username'], args['password'])
-    alert_balance(old_account.saldo, new_account.saldo)
-    old_account.update(new_account)
-    old_account.save()
-    alert_me(old_account.new_mov)
+    file_name = args['username']
+    
+    # you should use a filename if we have one
+    if args['file']:
+        file_name = args['file']
+
+    old_account = Account.load(file_name)
+
+    # if we get a password we can scrape the data
+    if args['password']:
+        new_account = caixa_scraper(args['username'], args['password'])
+        alert_balance(old_account.saldo, new_account.saldo)
+        old_account.update(new_account)
+        old_account.save(file_name)
+        alert_me(old_account.new_mov)
+
+    # if excel flag is active lets create a table
+    if args['excel']:
+        data_exc = old_account.create_dict()
+        create_excel(data_exc, file_name)
+
 
 if __name__ == '__main__':
     main()
