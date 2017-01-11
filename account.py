@@ -24,8 +24,12 @@ class Account(object):
 
         if os.path.exists(trans_file):
             with open(trans_file, 'rb') as f:
-                account = pickle.load(f)
-                return Account(transactions=account.transactions, saldo=account.saldo)
+                try:
+                    account = pickle.load(f)
+                except EOFError:
+                    return Account()
+                else:
+                    return Account(transactions=account.transactions, saldo=account.saldo)
 
         return Account()
 
@@ -46,13 +50,10 @@ class Account(object):
 # Compares two lists items and returns the that exist on the transactions list
 # and dont exist already on our DB.
 def new_transactions(transactions_db, transactions):
-    temp = []
+    a_len = len(transactions_db)
+    b = transactions[::-1]
 
-    if len(transactions_db) < len(transactions):
-        temp = transactions[len(transactions_db):]
-
-    else:
-        set_transactions = set(transactions_db)
-        temp = [x for x in transactions if x not in set_transactions]
-
-    return temp
+    for i in range(a_len):
+        if transactions_db[i:] == b[:a_len-i]:
+            return b[a_len-i:]
+    return b
