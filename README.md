@@ -8,9 +8,10 @@ This is a very simple script that gives you the latest transactions for your Cai
 
 Before using
 ------------
-1. pip install -r requirements.txt
-2. install [phantomjs](http://phantomjs.org/download.html)
-3. configure the config.py file with the alerts details ([Pushbullet](https://www.pushbullet.com) API or [Nexmo SMS](https://www.nexmo.com) API)
+1. git clone https://github.com/slauzinho/caixa.py
+2. pip install -r requirements.txt
+3. install [phantomjs](http://phantomjs.org/download.html)
+4. configure the config.py file with the alerts details ([Pushbullet](https://www.pushbullet.com) API or [Nexmo SMS](https://www.nexmo.com) API)
 
 Basic usage
 ------------
