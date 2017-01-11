@@ -17,7 +17,21 @@ Simply put your account details as arguments when calling the script:
 ```bash
 python caixa.py -u [username] -p [password]
 ```
-
+Optional commands
+------------------
+1. by using the flag --excel we can create a table in Excel with our transactions and transactions date.
+```bash
+python caixa.py -u [username] --excel
+```
+  if you dont choose a password the script will create the file based on the data previously saved.
+2. if you want to custom file names just run:
+```bash
+python caixa.py -u [username] -p [password] -f [filename]
+```
+or
+```bash
+python caixa.py -u [username] -f [filename] --excel
+```
 To do list
 ----------
 - [x] Add sms alert
