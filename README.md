@@ -38,5 +38,5 @@ To do list
 ----------
 - [x] Add sms alert
 - [ ] Scan more then 1 account
-- [ ] Generate an Excel table with all the transactions
+- [X] Generate an Excel table with all the transactions
 
