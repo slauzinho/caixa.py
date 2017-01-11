@@ -23,7 +23,7 @@ Optional commands
 ```bash
 python caixa.py -u [username] --excel
 ```
-By using the flag --excel we can create a table in Excel with our transactions and transactions date. If you dont choose a password the script will create the file based on the data previously saved.
+    By using the flag --excel we can create a table in Excel with our transactions and transactions date. If you dont choose a password   the script will create the file based on the data previously saved.
 
 2. Custom filenames
 ```bash
