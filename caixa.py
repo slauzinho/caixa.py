@@ -36,6 +36,7 @@ def read_user_pw():
 
     return args
 
+
 def caixa_scraper(username, password):
     """
     Scrapes data.
@@ -54,48 +55,48 @@ def caixa_scraper(username, password):
     driver = webdriver.PhantomJS('/usr/local/bin/phantomjs')
     driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/login.seam")
 
-    ## Login commands
+    # Login commands
     driver.find_element_by_id('loginForm:username').send_keys(username)
     driver.find_element_by_id('loginForm:password').send_keys(password)
     driver.find_element_by_id('loginForm:submit').click()
 
-    ## Select account
+    # Select account
     driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/private/contasordem/asminhascontas/movimentos/movimentos.seam")
     try:
         select = Select(driver.find_element_by_id('consultaMovimentosForm:selConta'))
 
-    except  NoSuchElementException:
-        print ('Wrong username/password')
+    except NoSuchElementException:
+        print('Wrong username/password')
         sys.exit(0)
 
     try:
         select.select_by_value(ACCOUNT_NR)
 
     except NoSuchElementException:
-        print ('Wrong account number, please check the config.py file')
+        print('Wrong account number, please check the config.py file')
         sys.exit(0)
 
-    ## Select account balance
+    # Select account balance
     saldo_aux = driver.find_element(By.XPATH, '//*[@id="consultaMovimentosForm"]/div[2]/div[2]/label').text
     saldo = float(saldo_aux.replace(" EUR", "").replace(".", "").replace(",", "."))
 
-    ## Select table of moviments
+    # Select table of moviments
     table = driver.find_element(By.XPATH, '//*[@id="consultaMovimentosForm"]/div[3]/table/tbody')
     try:
-        rows = table.find_elements(By.TAG_NAME, 'tr') # Select all rows from the table
+        rows = table.find_elements(By.TAG_NAME, 'tr')  # Select all rows from the table
 
-    except NoSuchElementException: # If it cant select a row it means there arent any moviments
+    except NoSuchElementException:  # If it cant select a row it means there arent any moviments
         return Account()
 
     transaction = []
 
-    ## For each row extract the type, date and value of the transaction
+    # For each row extract the type, date and value of the transaction
     for row in rows:
         fstcol = row.find_elements(By.TAG_NAME, 'td')[0].text.split('\n')
-        tipo = fstcol[0] # the type is always before the <br> tag
-        data = fstcol[1] # the date is always after the <br> tag
+        tipo = fstcol[0]  # the type is always before the <br> tag
+        data = fstcol[1]  # the date is always after the <br> tag
 
-        ## Convert the string to a float ex: "-200,00" to -200.00
+        # Convert the string to a float ex: "-200,00" to -200.00
         montante = float(row.find_elements(By.TAG_NAME, 'td')[1].text.replace(" ", "").replace(",", "."))
 
         transaction.append((tipo, data, montante))
@@ -104,10 +105,11 @@ def caixa_scraper(username, password):
 
     return Account(transactions=transaction, saldo=saldo)
 
+
 def main():
     args = read_user_pw()
     file_name = args['username']
-    
+
     # you should use a filename if we have one
     if args['file']:
         file_name = args['file']

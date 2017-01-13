@@ -97,12 +97,13 @@ class Account(object):
         trans_per_day = {}
 
         for transaction in self.transactions:
-            if trans_per_day.has_key(transaction[1]):
+            if transaction[1] in trans_per_day:
                 trans_per_day[transaction[1]] += transaction[2]
             else:
                 trans_per_day[transaction[1]] = transaction[2]
 
         return trans_per_day
+
 
 def new_transactions(transactions_db, transactions):
     """
