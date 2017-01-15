@@ -37,6 +37,6 @@ python caixa.py -u [username] -f [filename] --excel
 To do list
 ----------
 - [x] Add sms alert
-- [ ] Scan more then 1 account
+- [X] Scan more then 1 account
 - [X] Generate an Excel table with all the transactions
 
