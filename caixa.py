@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 from selenium.common.exceptions import NoSuchElementException
 from os import sys
 from config import ACCOUNT_NR
+from config import CHROME_DRIVER_PATH
 from account import Account
 from alerts import alert_balance
 from alerts import alert_me
@@ -52,7 +53,11 @@ def caixa_scraper(username, password):
         Account with the transactions and the current balance.
 
     """
-    driver = webdriver.PhantomJS('/usr/local/bin/phantomjs')
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    chromedriver = CHROME_DRIVER_PATH
+    driver = webdriver.Chrome(chrome_options=options,
+                              executable_path=chromedriver)
     driver.get("https://m.caixadirecta.cgd.pt/cdoMobile/login.seam")
 
     # Login commands

@@ -15,3 +15,7 @@ NEXMO = {"ENABLED": True,
           "to": "XXXXXX",
           "from": "NEXMO"}}
 
+# You need chromedriver to run headless chrome
+# download it here:
+# https://sites.google.com/a/chromium.org/chromedriver/downloads
+CHROME_DRIVER_PATH = "path/to/chromedriver"
