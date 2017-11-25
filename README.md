@@ -10,8 +10,8 @@ Before using
 ------------
 1. git clone https://github.com/slauzinho/caixa.py
 2. pip install -r requirements.txt
-3. install [phantomjs](http://phantomjs.org/download.html)
-4. configure the config.py file with the alerts details ([Pushbullet](https://www.pushbullet.com) API or [Nexmo SMS](https://www.nexmo.com) API)
+3. install [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+4. configure the config.py file with the alerts details ([Pushbullet](https://www.pushbullet.com) API or [Nexmo SMS](https://www.nexmo.com) API), your Caixadirecta account number and the path to the Chromedriver bin you downloaded previously.
 
 Basic usage
 ------------
